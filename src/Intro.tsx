@@ -1,5 +1,5 @@
 import './Intro.css';
-import { useEffect, useRef, useState } from 'jinx';
+import { useCallback, useEffect, useRef, useState } from 'jinx';
 
 const TARGET = 'Jon Orsi';
 
@@ -9,36 +9,27 @@ interface IntroProps {
 export default function Intro({ delayMs = 5000 }: IntroProps) {
   const typingRef = useRef<HTMLSpanElement>();
   const [index, setIndex] = useState(0);
-  const [letters, setLetters] = useState('');
 
-  const raf = useRef();
+  const raf = useRef(0);
   const lastUpdate = useRef(0);
-  const update: FrameRequestCallback = (time) => {
+  const animate = useCallback((time: number) => {
     let nextValue = 0;
     if (time - lastUpdate.current > 250) {
-      lastUpdate.current = time;
       setIndex((value) => {
         nextValue = value + 1;
-        setLetters(TARGET.slice(0, nextValue));
         return nextValue;
       });
+      lastUpdate.current = time;
     }
 
-    if (nextValue === TARGET.length) {
-      cancelAnimationFrame(raf.current);
-    } else {
-      requestAnimationFrame(update);
-    }
-  };
+    raf.current =
+      nextValue < TARGET.length ? requestAnimationFrame(animate) : 0;
+  }, []);
 
   useEffect(() => {
-    if (typingRef.current && raf.current == null) {
-      raf.current = requestAnimationFrame(update);
-      return () => {
-        cancelAnimationFrame(raf.current);
-      };
-    }
-  }, [index]);
+    raf.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf.current);
+  }, []);
 
   return (
     <div
@@ -69,7 +60,7 @@ export default function Intro({ delayMs = 5000 }: IntroProps) {
             width: '200px',
           }}
         >
-          <span ref={typingRef}>{letters}</span>
+          <span ref={typingRef}>{TARGET.slice(0, index)}</span>
           <span
             style={{
               backgroundColor: 'transparent',
