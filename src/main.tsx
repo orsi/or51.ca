@@ -1,31 +1,14 @@
 import './global.css';
-import { useEffect, useState } from 'jinx';
 import Background from './Background';
-import Intro from './Intro';
 import Home from './Home';
+import { Nav } from './Nav';
 
-const INTRO_DELAY_MS = 5000;
 const App = () => {
-  const [showIntro, setShowIntro] = useState(true);
-
-  useEffect(() => {
-      console.log('wtf?');
-      setTimeout(() => {
-      console.log('yo?');
-      setShowIntro(false);
-    }, INTRO_DELAY_MS);
-  }, []);
-
   return (
     <>
-      {showIntro ? (
-        <Intro duration={INTRO_DELAY_MS} />
-      ) : (
-        <>
-          <Background />
-          <Home />
-        </>
-      )}
+      {/* <Background /> */}
+      <Nav />
+      {/* <Home /> */}
     </>
   );
 };

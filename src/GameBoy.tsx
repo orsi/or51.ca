@@ -1,10 +1,10 @@
-import './Intro.css';
+import './GameBoy.css';
 import { useEffect, useRef } from 'jinx';
 
 interface IntroProps {
   duration: number;
 }
-export default function Intro({ duration = 3000 }: IntroProps) {
+export function GameBoy({ duration = 3000 }: IntroProps) {
   const typingRef = useRef<HTMLSpanElement>();
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function Intro({ duration = 3000 }: IntroProps) {
 
   return (
     <div
-      class="intro"
+      class="gameboy"
       style={{
         display: 'flex',
         boxSizing: 'border-box',
