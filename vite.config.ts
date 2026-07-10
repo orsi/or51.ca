@@ -2,6 +2,7 @@ import path from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  base: '/or51.ca',
   esbuild: {
     jsx: 'transform',
     jsxFactory: '__jsx',
