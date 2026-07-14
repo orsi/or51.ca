@@ -1,14 +1,3 @@
-import './global.css';
-import { Intro } from './Intro';
+import App from "./App";
 
-document.querySelector<HTMLDivElement>('body')!.append(
-  <div
-    style={{
-      maxWidth: '600px',
-      margin: '0 auto',
-      padding: '24px 16px'
-    }}
-  >
-    <Intro />
-  </div>
-);
+document.querySelector<HTMLDivElement>("body")!.append(<App />);
